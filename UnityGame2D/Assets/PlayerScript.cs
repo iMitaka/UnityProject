@@ -12,7 +12,8 @@ public class PlayerScript : MonoBehaviour
 
     private void Start()
     {
-        coinsScore.text = string.Empty;
+        coins = PlayerPrefs.GetInt("coins", 0);
+        coinsScore.text = coins.ToString();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -28,7 +29,9 @@ public class PlayerScript : MonoBehaviour
 
         if (collision.CompareTag("Portal"))
         {
+            PlayerPrefs.SetInt("coins", coins);
             Debug.Log("Level complete!");
+            Application.LoadLevel(1);
         }
 
     }
