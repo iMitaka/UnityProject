@@ -1,17 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
 
-    private int coins = 0;
+    private int coins;
     public Text coinsScore;
     public GameObject coinSound;
+    private int nextScene;
 
     private void Start()
     {
+        nextScene = PlayerPrefs.GetInt("nextScene", 0);
+        nextScene = SceneManager.GetActiveScene().buildIndex + 1;
         coins = PlayerPrefs.GetInt("coins", 0);
         coinsScore.text = coins.ToString();
     }
@@ -29,9 +33,10 @@ public class PlayerScript : MonoBehaviour
 
         if (collision.CompareTag("Portal"))
         {
+            PlayerPrefs.SetInt("nextScene", nextScene);
             PlayerPrefs.SetInt("coins", coins);
             Debug.Log("Level complete!");
-            Application.LoadLevel(1);
+            SceneManager.LoadScene(nextScene);
         }
 
     }
