@@ -11,10 +11,10 @@ public class PlayerScript : MonoBehaviour
     public Text coinsScore;
     public GameObject coinSound;
     private int nextScene;
+    private int health = 3;
 
     private void Start()
     {
-        nextScene = PlayerPrefs.GetInt("nextScene", 0);
         nextScene = SceneManager.GetActiveScene().buildIndex + 1;
         coins = PlayerPrefs.GetInt("coins", 0);
         coinsScore.text = coins.ToString();
@@ -39,10 +39,32 @@ public class PlayerScript : MonoBehaviour
             SceneManager.LoadScene(nextScene);
         }
 
+        if (collision.gameObject.CompareTag("Meteor"))
+        {
+            health--;
+            if (health == 0)
+            {
+                SceneManager.LoadScene(nextScene - 1);
+            }
+        }
     }
 
-    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Spikes"))
+        {
+            health--;
+            if (health == 0)
+            {
+                SceneManager.LoadScene(nextScene - 1);
+            }
+        }
+    }
 
-    
+
+
+
 
 }
+
+
