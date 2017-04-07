@@ -11,6 +11,7 @@ public class PlayerScript : MonoBehaviour
     public Text coinsScore;
     public GameObject coinSound;
     public GameObject ouchSound;
+    public GameObject heartBeatSound;
     private int nextScene;
     private int health = 3;
     public GameObject Hearts3;
@@ -71,8 +72,10 @@ public class PlayerScript : MonoBehaviour
 
         if (collision.CompareTag("Heart+"))
         {
+            
             if (health < 3)
             {
+                heartBeatSound.GetComponent<AudioSource>().Play();
                 health++;
                 UpdateHealthBar(health);
                 Destroy(collision.gameObject);
@@ -97,7 +100,7 @@ public class PlayerScript : MonoBehaviour
                 SceneManager.LoadScene(nextScene - 1);
             }
         }
-    }
+    } 
 
     IEnumerator RestartLevel(float seconds)
     {
